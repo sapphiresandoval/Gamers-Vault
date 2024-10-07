@@ -1,0 +1,36 @@
+Group: 
+    Sapphire(Frontend, anything else), 
+    Jacob(backend - Python, help with style), 
+    Robert (Backend, anything else, moral support)
+
+Repo:
+
+Name: Gamers Vault
+
+Description: 
+    A goodreads for games, where users can list games they own and want. 
+    The owned games will be split into played and a backlog of not played. 
+    You can add friends and see their lists and recomend games. Every Game will beable to have reviews (1-5), and comments.  
+
+Product: 
+    MVP: 
+        Login-reg
+        add games, update, and delete.
+        owned games( how theyre owned, if played)
+        wish list games
+        review games on a scale (1-5), and comments
+        protected routes
+        Many to many-- Game reviews.
+
+    Bonus:
+        add other users and recommend (if time allows.)
+        use tailwind/Bootstrap
+        APIs: 
+        steam:
+            https://steamcommunity.com/dev 
+        how long to beat:
+            https://github.com/ckatzorke/howlongtobeat 
+
+Notes: 
+    Colors: dark background, purples.
+
