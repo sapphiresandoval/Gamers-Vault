@@ -16,7 +16,7 @@ const GameUpdate = (props) => {
     })
 
     useEffect(() => {
-        // axios.get()
+        axios.get(`http://localhost:5000/api/games/${gameId}`)
     },[gameId])
 
     const changeHandler = e => {
@@ -27,9 +27,9 @@ const GameUpdate = (props) => {
     const submitHandler = e => {
         e.preventDefault()
         const newGame = {...game, user_id: user.id}
-        // axios.post()
-            // .then(() => navigate('/games/list'))
-            // .catch(err => console.log(err))
+        axios.post('http://localhost:5000/api/games/edit')
+            .then(() => navigate('/games/list'))
+            .catch(err => console.log(err))
     }
 
     return (
