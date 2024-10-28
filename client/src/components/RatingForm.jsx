@@ -41,7 +41,7 @@ const RatingForm = (props) => {
                             />
                         <br></br>
 
-                        <input type="submit" value="Add Game" className='mt-3 py-3 bg-purple-800 text-black w-full rounded-md font-bold text-black' />
+                        <input type="submit" value="Rate" className='mt-3 py-3 bg-purple-800 text-black w-full rounded-md font-bold text-black' />
                         
                     </form>
                 </div>
