@@ -4,6 +4,13 @@ import Login from './views/Login'
 import Registration from './views/Registration'
 import Error from './views/Error'
 import Dashboard from './views/Dashboard'
+import GameCreate from './views/GameCreate'
+import GameUpdate from './views/GameUpdate'
+import BacklogList from './views/BacklogList'
+import WishList from './views/WishList'
+import CompletedList from './views/CompletedList'
+import GameDisplay from './views/GameDisplay'
+
 
 function App() {
 
@@ -19,19 +26,20 @@ function App() {
         <Route path='/games/list' element={<Dashboard/>}/>
         
         {/* List Views */}
-        {/* <Route  path='/game/backlog' element={<GameList/>}/> */}
-        {/* <Route  path='/game/wish' element={<GameList/>}/> */}
-        {/* <Route  path='/game/complete' element={<GameList/>}/> */}
+        <Route  path='/game/backlog' element={<BacklogList/>}/>
+        <Route  path='/game/wish' element={<WishList/>}/>
+        <Route  path='/game/completed' element={<CompletedList/>}/>
 
         {/* Game View */}
-        {/* <Route  path='/game/:id' element={<GameDisplay/>}/> */}
+        <Route  path='/game' element={<GameDisplay/>}/>
 
         {/* Game Forms */}
-        {/* <Route path='/game/create' element={<GameCreate/>}/> */}
-        {/* <Route path='/game/update' element={<GameUpdate/>}/> */}
+        <Route path='/game/create' element={<GameCreate/>}/>
+        <Route path='/game/update/:gameId' element={<GameUpdate/>}/>
 
         {/* Error page Stays at bottom of Routes */}
         <Route path='*' element={<Error/>}/>
+
       </Routes>
     </>
   )
