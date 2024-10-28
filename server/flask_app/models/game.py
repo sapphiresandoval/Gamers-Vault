@@ -12,24 +12,180 @@ bcrypt = Bcrypt(app)
 
 
 class Game:
-    db = "gamers_vault"  # which database are you using for this project
+    db = "gamers_vault"
 
     def __init__(self, data):
         self.id = data["id"]
-        self.username = data["username"]
-        self.email = data["email"]
-        self.password = data["password"]
+        self.name = data["name"]
+        self.genre = data["genre"]
+        self.platform = data["platform"]
+        self.how_its_owned = data["how_its_owned"]
+        self.list = data["list"]
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
         self.user_id = data["user_id"]
-        self.creator = None
-        # What changes need to be made above for this project?
-        # What needs to be added here for class association?
+        self.ratings = None
+
+    def is_rated(self, user_id):
+        for rating in self.ratings:
+            if rating.user_id == user_id:
+                return True
+        return False
 
     # Create Models
+    @classmethod
+    def create(cls, data):
+        if Game.get_game_by_name(data["name"]):
+            flash("Game Name exists already", "game")
+            return False
+        if not cls.validate_game(data):
+            return False
+        query = """
+            INSERT INTO games (name, genre, platform, how_its_owned, list, user_id)
+            VALUES (%(name)s, %(genre)s, %(platform)s, %(how_its_owned)s, %(list)s, %(user_id)s);
+        """
+        return connectToMySQL(cls.db).query_db(query, data)
+
+    @classmethod
+    def rating(cls, data):
+        query = """
+            INSERT INTO games (game_id, user_id, rating)
+            VALUES (%(game_id)s, %(user_id)s, %(rating)s);
+        """
+        return connectToMySQL(cls.db).query_db(query, data)
 
     # Read Models
+    @classmethod
+    def get_all(cls):
+        query = """
+            SELECT * FROM games;
+        """
+        results = connectToMySQL(cls.db).query_db(query)
+        users = []
+        for user in results:
+            users.append(user)
+        return users
+
+    @classmethod
+    def get_one(cls, id):
+        data = {"id": id}
+        query = """
+            SELECT * FROM games 
+            WHERE id = %(id)s;
+        """
+        results = connectToMySQL(cls.db).query_db(query, data)
+        return cls(results[0])
+
+    @classmethod
+    def get_game_by_name(cls, name):
+        data = {"name": name}
+        query = """
+            SELECT * FROM games 
+            WHERE name = %(name)s;
+        """
+        results = connectToMySQL(cls.db).query_db(query, data)
+        if results:
+            return cls(results[0])
+        return False
+
+    # @classmethod
+    # def collectors_games(cls):
+    #     query = """
+    #         SELECT * FROM games
+    #         JOIN users
+    #         ON games.user_id = users.id;
+    #     """
+    #     results = connectToMySQL(cls.db).query_db(query)
+    #     games = []
+    #     for db_row in results:
+    #         record = cls(db_row)
+    #         user_data = {
+    #             "id": db_row["users.id"],
+    #             "username": db_row["username"],
+    #             "email": db_row["email"],
+    #             "password": db_row["password"],
+    #             "created_at": db_row["users.created_at"],
+    #             "updated_at": db_row["users.updated_at"],
+    #         }
+    #         user_obj = user.User(user_data)
+    #         record.collector = user_obj
+    #         games.append(record)
+    #     return games
+
+    # @classmethod
+    # def record_with_collector_and_ratings(cls, id):
+    #     data = {"id": id}
+    #     query = """
+    #         SELECT games.*, users.*, ratings.*, ROUND(AVG(ratings.rating),1) AS average_rating FROM games
+    #         JOIN users
+    #         ON games.user_id = users.id
+    #         LEFT JOIN ratings
+    #         ON games.id = ratings.record_id
+    #         WHERE games.id = %(id)s
+    #         GROUP BY games.id;
+    #     """
+    #     results = connectToMySQL(cls.db).query_db(query, data)
+    #     games = []
+    #     print(results)
+    #     for db_row in results:
+    #         record = cls(db_row)
+    #         record.collector = user.User(
+    #             {
+    #                 "id": db_row["users.id"],
+    #                 "username": db_row["username"],
+    #                 "email": db_row["email"],
+    #                 "password": db_row["password"],
+    #                 "created_at": db_row["users.created_at"],
+    #                 "updated_at": db_row["users.updated_at"],
+    #             }
+    #         )
+
+    #         record.ratings = db_row["average_rating"]
+    #         games.append(record)
+    #     return games
 
     # Update Models
+    @classmethod
+    def update(cls, data):
+        query = """
+            UPDATE games
+            SET 
+            name = %(name)s,
+            genre = %(genre)s,
+            platform = %(platform)s,
+            how_its_owned = %(how_its_owned)s,
+            list = %(list)s
+            WHERE id = %(id)s;
+        """
+        return connectToMySQL(cls.db).query_db(query, data)
 
     # Delete Models
+    @classmethod
+    def delete(cls, id):
+        data = {"id": id}
+        query = """
+            DELETE FROM games
+            WHERE id = %(id)s;
+        """
+        return connectToMySQL(cls.db).query_db(query, data)
+
+    # Validations
+    @staticmethod
+    def validate_game(data):
+        is_valid = True
+        if len(data["name"]) < 2:
+            flash("Must be at least 2 characters.", "name")
+            is_valid = False
+        if len(data["genre"]) < 2:
+            flash("Must be at least 2 characters.", "genre")
+            is_valid = False
+        if len(data["platform"]) < 2:
+            flash("Must be at least 2 characters.", "platform")
+            is_valid = False
+        if len(data["how_its_owned"]) < 1:
+            flash("Must have what platform you own this game on", "how_its_owned")
+            is_valid = False
+        if len(data["list"]) < 1:
+            flash("Choose a list", "list")
+            is_valid = False
+        return is_valid
