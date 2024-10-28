@@ -6,8 +6,9 @@ name = "pypi"
 [packages]
 pymysql = "*"
 flask = "*"
-flask-bcrypt = "*"
 flask-cors = "*"
+flask-bcrypt = "*"
+jsonify = "*"
 
 [dev-packages]
 

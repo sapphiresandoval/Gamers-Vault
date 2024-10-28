@@ -1,5 +1,5 @@
 from flask_app import app
-from flask_app.controllers import users, others
+from flask_app.controllers import users, games
 # Controllers go here,
 # If you add a new controller file you have to also add it here
 # This is where Flask's thought process starts.  The request enters here, then goes to the controller above which has a matching route
