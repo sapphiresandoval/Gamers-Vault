@@ -17,6 +17,7 @@ const GameUpdate = (props) => {
 
     useEffect(() => {
         axios.get(`http://localhost:5000/api/games/${gameId}`)
+        .then(res => setGame(res.data))
     },[gameId])
 
     const changeHandler = e => {

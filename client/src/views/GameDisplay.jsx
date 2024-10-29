@@ -9,7 +9,9 @@ const GameDisplay = (props) => {
     const { user, setUser } = useContext(userContext)
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/games')
+        axios.get(`http://localhost:5000/api/games/${gameId}`)
+        .then(res => setGame(res.data))
+        .catch(err => console.log(err))
     }, [gameId])
 
     return (
