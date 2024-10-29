@@ -22,9 +22,9 @@ const GameCreate = (props) => {
     const submitHandler = e => {
         e.preventDefault()
         const newGame = {...game, user_id: user.id}
-        // axios.post()
-            // .then(() => navigate('/games/list'))
-            // .catch(err => console.log(err))
+        axios.post('http://localhost:5000/api/games/create')
+            .then(() => navigate('/games/list'))
+            .catch(err => console.log(err))
         }
 
     return (
@@ -60,7 +60,7 @@ const GameCreate = (props) => {
                         <p>How is it owned?</p>
                         <div>
                             <label className='m-2'>
-                                Pysical
+                                Physical
                                 <input 
                                     type="checkbox" 
                                     name="how_its_owned"
@@ -121,7 +121,7 @@ const GameCreate = (props) => {
                                 />
                             </label>
                             <label className='m-2'>
-                                Nintentdo
+                                Nintendo
                                 <input 
                                     type="checkbox" 
                                     name="platform"
