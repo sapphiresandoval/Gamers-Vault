@@ -28,7 +28,7 @@ const GameUpdate = (props) => {
         e.preventDefault()
         const newGame = {...game, user_id: user.id}
         // axios.post()
-            // .then(() => navigate('/games/list'))
+            // .then(() => navigate to catelog)
             // .catch(err => console.log(err))
     }
 

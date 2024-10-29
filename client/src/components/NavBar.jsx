@@ -34,7 +34,7 @@ const NavBar = (props) => {
                         <Link to={'/games/list'}>Home</Link>
                     </li>
                     <li>
-                        <Link to={`/game/create`}>Add Game</Link>
+                        <Link to={`/game/catalog`}>Catalog</Link>
                     </li>
                     <li>
                         <p className='' onClick={logoutUser}>Logout</p>

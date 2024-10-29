@@ -11,6 +11,7 @@ const GameDisplay = (props) => {
     useEffect(() => {
         // axios.get()
     }, [gameId])
+    // may need another azios call for submit handler... unsure of forms rn...
     
     return (
         <div className="flex justify-center items-center h-screen">
@@ -19,6 +20,16 @@ const GameDisplay = (props) => {
             <hr/>
                 <p>Average Rating</p>
                 <p>Genre</p>
+
+                {/* Add to list if not in user list */}
+                <form>
+                    <select name="list" onChange={changeHandler} className="select select-bordered w-full max-w-xs">
+                        <option value="">Select List</option>
+                        <option value="backlog">Backlog</option>
+                        <option value="wish">Wish</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </form>
             </div>
             <RatingForm/>
         </div>

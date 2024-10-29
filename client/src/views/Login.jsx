@@ -19,7 +19,7 @@ const Login = (props) => {
 
     const submitHandler = e => {
         e.preventDefault()
-
+        // set user in use context instead of user data.
         // axios.post('', JSON.stringify(user),{ headers: { 'Content-Type': 'application/json' } })
         //     .then(res => console.log(res))
         //     .catch(err => console.log(err))

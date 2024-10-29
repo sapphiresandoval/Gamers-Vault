@@ -14,14 +14,15 @@ const RatingForm = (props) => {
     const submitHandler = e => {
         e.preventDefault()
         // axios.post()
-        }
+    }
+
     return (
         <div className="flex justify-center items-center h-screen">
             <div className="xl:w-[700px] px-10 h-[300px] rounded-3xl xl:shadow-xl">
                 <h1 className="text-center text-3xl font-bold mt-2 mb-2 text-purple-600">Rate</h1>
                 <hr/>
                     <div className='flex justify-center mt-10'>
-                    <form>
+                    <form onSubmit={submitHandler}>
                         <input 
                             type="number"
                             name="number"

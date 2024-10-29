@@ -6,6 +6,11 @@ const BacklogList = (props) => {
     const {allGames, setAllGames} = useContext(userContext)
     const {user, setUser} = useContext(userContext)
     
+    useEffect(() => {
+        //axios.get()
+            // .then( set all Games)
+    },[user.id])
+    //We also need to add a map function for table
 
     // filter all games to users games then to specific list.
 
@@ -26,7 +31,7 @@ const BacklogList = (props) => {
                     {/* MAP GOES HERE */}
                     <tr className='hover:bg-purple-400 hover:text-black duration-300 ease-in-out'>
                         <td>
-                            <Link to={'/game'}>Game Name</Link>
+                            <Link to={'/game/gameId'}>Game Name</Link>
                         </td>
                         <td>Horror</td>
                         <td>Steam</td>

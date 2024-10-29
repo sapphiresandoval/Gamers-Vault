@@ -10,6 +10,7 @@ import BacklogList from './views/BacklogList'
 import WishList from './views/WishList'
 import CompletedList from './views/CompletedList'
 import GameDisplay from './views/GameDisplay'
+import Catalog from './views/Catalog'
 
 
 function App() {
@@ -26,12 +27,13 @@ function App() {
         <Route path='/games/list' element={<Dashboard/>}/>
         
         {/* List Views */}
+        <Route path='/game/catalog' element={<Catalog/>}/>
         <Route  path='/game/backlog' element={<BacklogList/>}/>
         <Route  path='/game/wish' element={<WishList/>}/>
         <Route  path='/game/completed' element={<CompletedList/>}/>
 
         {/* Game View */}
-        <Route  path='/game' element={<GameDisplay/>}/>
+        <Route  path='/game/:gameId' element={<GameDisplay/>}/>
 
         {/* Game Forms */}
         <Route path='/game/create' element={<GameCreate/>}/>

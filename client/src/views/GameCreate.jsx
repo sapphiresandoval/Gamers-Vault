@@ -23,7 +23,7 @@ const GameCreate = (props) => {
         e.preventDefault()
         const newGame = {...game, user_id: user.id}
         // axios.post()
-            // .then(() => navigate('/games/list'))
+            // .then(() => NAvigate to catelog)
             // .catch(err => console.log(err))
         }
 
@@ -85,7 +85,7 @@ const GameCreate = (props) => {
                         <p className='text-red-500'>{gameErrors.how_its_owned}</p>
                         <br></br>
                         
-                        <p>Platform it's owned on?</p>
+                        <p>Platform it's on?</p>
                         <div>
                             <label className='m-2'>
                                 Xbox
