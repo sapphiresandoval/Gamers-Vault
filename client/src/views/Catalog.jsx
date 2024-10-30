@@ -23,7 +23,7 @@ const Catalog = (props) => {
             }
         };
 
-        if (user.user_id) { // Only fetch games if user ID is available
+        if (user.id) { // Only fetch games if user ID is available
             fetchGames();
         }
     }, [user.id, setAllGames]); // Adding user.id as a dependency
@@ -52,7 +52,7 @@ const Catalog = (props) => {
                             </td>
                             <td>{game.genre}</td>
                             <td>
-                                <Link to={`/games/${game.id}`} className="rounded hover:outline-purple-500 p-2 hover:bg-purple-800 hover:text-white mr-2">View</Link>
+                                <Link to={`/game/${game.id}`} className="rounded hover:outline-purple-500 p-2 hover:bg-purple-800 hover:text-white mr-2">View</Link>
                                 <Link to={`/game/update/${game.id}`} className="rounded hover:outline-purple-500 p-2 hover:bg-purple-800 hover:text-white mr-2">Update</Link>
                             </td>
                         </tr>

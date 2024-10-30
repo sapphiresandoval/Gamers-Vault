@@ -71,7 +71,7 @@ def update():
     if not game.Game.validate_game(request.json):
         return jsonify({"message": "Validation failed"}), 400
 
-    game.Game.update(request.json, user_id)  # Pass user_id if needed
+    game.Game.update(request.json)  # Pass user_id if needed
     return jsonify({"message": "Game updated successfully"}), 200
 
 

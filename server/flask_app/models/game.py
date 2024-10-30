@@ -211,8 +211,7 @@ class Game:
             SET 
             name = %(name)s,
             genre = %(genre)s,
-            description = %(description)s,
-            list = %(list)s
+            description = %(description)s
             WHERE id = %(id)s;
         """
         return connectToMySQL(cls.db).query_db(query, data)

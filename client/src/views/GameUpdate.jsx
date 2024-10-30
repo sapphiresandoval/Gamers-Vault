@@ -12,15 +12,24 @@ const GameUpdate = (props) => {
     const [game, setGame] = useState({
         name: '',
         genre: '',
-        description: '',
-        list: ''
+        description: ''
     })
 
+    console.log(game)
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/games/${gameId}`)
-        .then(res => setGame(res.data))
-        .catch(err => console.log(err))
-    },[gameId])
+        const fetchGame = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/api/games/${gameId}`);
+                setGame(response.data);  // Set the game state with fetched data
+            } catch (error) {
+                console.error("Error fetching game data:", error);
+            }
+        };
+
+        fetchGame();
+    }, [gameId])
+
+    console.log(user.id)
 
     const changeHandler = e => {
         const {name, value} = e.target
@@ -29,11 +38,20 @@ const GameUpdate = (props) => {
 
     const submitHandler = e => {
         e.preventDefault()
-        const newGame = {...game, user_id: user.id}
-        axios.post('http://localhost:5000/api/games/edit')
-            .then(() => navigate('/game/catalog'))
-            .catch(err => console.log(err))
-    }
+
+        if (!user.id) {
+            console.error("User ID is not available")
+            return;
+        }
+
+        try {
+            axios.post('http://localhost:5000/api/games/edit', game);
+            navigate('/game/catalog');
+        } catch (err) {
+            console.error(err);
+            setGameErrors(err.response?.data || { general: 'Failed to update game' });
+        }
+        }
 
     return (
         <div className="flex justify-center items-center h-screen">
@@ -64,103 +82,16 @@ const GameUpdate = (props) => {
                         />
                         <p className='text-red-500'>{gameErrors.genre}</p>
                         <br></br>
-                        
-                        <p>How is it owned?</p>
-                        <div>
-                            <label className='m-2'>
-                                Pysical
-                                <input 
-                                    type="checkbox" 
-                                    name="how_its_owned"
-                                    value='physical'
-                                    onChange={changeHandler}
-                                    checked={game.how_its_owned}
-                                    className='ml-1'
-                                />
-                            </label>
-                            <label className='m-2'>
-                                Digital
-                                <input 
-                                    type="checkbox" 
-                                    name="how_its_owned"
-                                    value='digital'
-                                    onChange={changeHandler}
-                                    checked={game.how_its_owned}
-                                    className='ml-1'
-                                />
-                            </label>
-                        </div>
-                        <p className='text-red-500'>{gameErrors.how_its_owned}</p>
-                        <br></br>
 
-                        <p>Platform it's owned on?</p>
-                        <div>
-                            <label className='m-2'>
-                                Xbox
-                                <input 
-                                    type="checkbox" 
-                                    name="platform"
-                                    value='xbox'
-                                    onChange={changeHandler}
-                                    checked={game.platform}
-                                    className='ml-1'
-                                />
-                            </label>
-                            <label className='m-2'>
-                                Playstation
-                                <input 
-                                    type="checkbox" 
-                                    name="platform"
-                                    value='playstation'
-                                    onChange={changeHandler}
-                                    checked={game.platform}
-                                    className='ml-1'
-                                />
-                            </label>
-                            <label className='m-2'>
-                                Steam
-                                <input 
-                                    type="checkbox" 
-                                    name="platform"
-                                    value='steam'
-                                    onChange={changeHandler}
-                                    checked={game.platform}
-                                    className='ml-1'
-                                />
-                            </label>
-                            <label className='m-2'>
-                                Nintentdo
-                                <input 
-                                    type="checkbox" 
-                                    name="platform"
-                                    value='nintendo'
-                                    onChange={changeHandler}
-                                    checked={game.platform}
-                                    className='ml-1'
-                                />
-                            </label>
-                            <label className='m-2'>
-                                Other
-                                <input 
-                                    type="checkbox" 
-                                    name="platform"
-                                    value='other'
-                                    onChange={changeHandler}
-                                    checked={game.platform}
-                                    className='ml-1'
-                                />
-                            </label>
-                        </div>
-                        <p className='text-red-500'>{gameErrors.platform}</p>
-                        <br></br>
-
-                        <select name="list" onChange={changeHandler} className="select select-bordered w-full max-w-xs">
-                            <option value="">Select List</option>
-                            <option value="backlog">Backlog</option>
-                            <option value="wish">Wish</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                        <p className='text-red-500'>{gameErrors.list}</p>
+                        <input 
+                            type="text"
+                            name='description'
+                            value={game.description}
+                            onChange={changeHandler}
+                            placeholder='Game Description'
+                            className='py-3 p-5 rounded-md  bg-zinc-50 md:w-[500px] w-[300px] text-black'
+                        />
+                        <p className='text-red-500'>{gameErrors.description}</p>
                         <br></br>
 
                         <input type="submit" value="Update Game" className='py-3 bg-purple-800 text-black w-full rounded-md font-bold text-black' />
