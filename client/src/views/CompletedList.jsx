@@ -1,14 +1,16 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import { userContext } from '../context/userContext';
 import { Link, useParams } from 'react-router-dom';
+import axios from 'axios'
 
 const CompletedList = (props) => {
     const {allGames, setAllGames} = useContext(userContext)
     const {user, setUser} = useContext(userContext)
     
     useEffect(() => {
-        //axios.get()
-            // .then( set all Games)
+        axios.get('http://localhost:5000/api/games/${gameId}')
+            .then( res => setAllGames(res.data))
+            .catch(err => console.log(err))
     },[user.id])
     //We also need to add a map function for table
 

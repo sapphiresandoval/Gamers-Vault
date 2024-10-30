@@ -110,7 +110,7 @@ class User:
                 this_user.password, data["password"]
             ):  # looks at password used to login and the hashed password (works like keying species)
                 session["user_id"] = this_user.id
-                session["username"] = f"{this_user.username}"
+                session["username"] = this_user.username
                 return this_user.id
         flash("Login incorrect", "login")
         return False

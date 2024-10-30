@@ -4,15 +4,14 @@ import { userContext } from '../context/userContext';
 import axios from 'axios';
 
 const NavBar = (props) => {
-    // const {user, setUser} = useContext(userContext)
+    const {user, setUser} = useContext(userContext)
     const navigate = useNavigate()
 
     const location = useLocation()
 
     const logoutUser = () => {
-        // axios.post('', JSON.stringify(user),{ headers: { 'Content-Type': 'application/json' } })
-        //     .then(res => console.log(res))
-        //     .catch(err => console.log(err))
+        axios.post('http://localhost:5000/api/logout', JSON.stringify(user),{ headers: { 'Content-Type': 'application/json' } })
+            .then(() => navigate('/') )
     }
 
     if(location.pathname == '/' || location.pathname == '/register'){

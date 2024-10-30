@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import { userContext } from '../context/userContext';
 import RatingForm from '../components/RatingForm';
+import axios from 'axios'
+
 
 const GameDisplay = (props) => {
     const {gameId} = useParams()
@@ -9,7 +11,7 @@ const GameDisplay = (props) => {
     const {user, setUser} = useContext(userContext)
 
     useEffect(() => {
-        // axios.get()
+        axios.get(`http://localhost:5000/api/games/${gameId}`)
     }, [gameId])
     // may need another azios call for submit handler... unsure of forms rn...
     
