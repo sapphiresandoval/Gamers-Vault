@@ -31,6 +31,17 @@ class Game:
                 return True
         return False
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "genre": self.genre,
+            "description": self.description,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+            "user_id": self.user_id,
+        }
+
     # Create Models
     @classmethod
     def create_game(cls, data):
@@ -142,7 +153,7 @@ class Game:
             game.ratings = db_row["average_rating"]
             games.append(game)
         return games
-    
+
     @classmethod
     def game_with_lists(cls, id):
         data = {"id": id}

@@ -24,6 +24,16 @@ class User:
         # What changes need to be made above for this project?
         # What needs to be added here for class association?
 
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email,
+            "password": self.password,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at,
+        }
+
     # Create Models
     @classmethod
     def create(cls, user_data):

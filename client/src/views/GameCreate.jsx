@@ -14,6 +14,8 @@ const GameCreate = () => {
         description: '',
     })
 
+    console.log(user.user_id)
+
     const changeHandler = e => {
         const {name, value} = e.target
         setGame(prev => ({...prev, [name]: value}))
@@ -22,12 +24,12 @@ const GameCreate = () => {
     const submitHandler = e => {
         e.preventDefault()
 
-        if (!user.id) {
+        if (!user.user_id) {
             console.error("User ID is not available")
             return;
         }
 
-        const newGame = { ...game, user_id: user.id }; // Use user.id directly
+        const newGame = { ...game, user_id: user.user_id }; // Use user.id directly
 
         try {
             axios.post('http://localhost:5000/api/games/create', newGame);

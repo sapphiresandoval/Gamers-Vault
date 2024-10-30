@@ -26,7 +26,7 @@ const Login = (props) => {
             headers: { 'Content-Type': 'application/json' }, credentials
         })
         .then(res => {
-            setUser({ id: res.data.user_id, username: res.data.username});  // Update user state with the response data
+            setUser(res.data);  // Update user state with the response data
             setCredentials(res.data)
             navigate('/games/list');  // Redirect after successful login
         })

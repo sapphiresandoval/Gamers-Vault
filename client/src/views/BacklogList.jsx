@@ -18,7 +18,7 @@ const BacklogList = (props) => {
 
     return (
         <div className="overflow-x-auto m-3">
-            <h2 className='text-center text-4xl font-bold text-purple-400 m-3'>Users Backlog List</h2>
+            <h2 className='text-center text-4xl font-bold text-purple-400 m-3'>{user.username}'s Backlog List</h2>
             <table className="table mt-2">
                 <thead>
                     <tr className='text-lg text-purple-500'>

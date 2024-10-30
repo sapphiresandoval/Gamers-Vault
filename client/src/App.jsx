@@ -33,7 +33,7 @@ function App() {
         <Route  path='/game/completed' element={<CompletedList/>}/>
 
         {/* Game View */}
-        <Route  path='/games/:gameId' element={<GameDisplay/>}/>
+        <Route  path='/game/:gameId' element={<GameDisplay/>}/>
 
         {/* Game Forms */}
         <Route path='/game/create' element={<GameCreate/>}/>

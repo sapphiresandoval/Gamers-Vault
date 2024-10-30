@@ -6,7 +6,10 @@ import axios from 'axios';
 const Catalog = (props) => {
     const { allGames, setAllGames } = useContext(userContext);
     const { user } = useContext(userContext);
-    
+    console.log(user.id)
+    console.log(user)
+    console.log(allGames)
+
     useEffect(() => {
         const fetchGames = async () => {
             try {
@@ -20,7 +23,7 @@ const Catalog = (props) => {
             }
         };
 
-        if (user.id) { // Only fetch games if user ID is available
+        if (user.user_id) { // Only fetch games if user ID is available
             fetchGames();
         }
     }, [user.id, setAllGames]); // Adding user.id as a dependency
