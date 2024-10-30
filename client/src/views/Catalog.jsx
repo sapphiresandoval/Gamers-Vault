@@ -1,16 +1,29 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect } from 'react';
 import { userContext } from '../context/userContext';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Catalog = (props) => {
-    const {allGames, setAllGames} = useContext(userContext)
-    const {user, setUser} = useContext(userContext)
+    const { allGames, setAllGames } = useContext(userContext);
+    const { user } = useContext(userContext);
     
     useEffect(() => {
-        //axios.get()
-            // .then( set all Games)
-    },[])
-    //We also need to add a map function for table
+        const fetchGames = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/games', {
+                    // headers: { 'Content-Type': 'application/json' }
+                });
+                setAllGames(response.data);
+                console.log("GAMES:", response.data)
+            } catch (err) {
+                console.log('Error fetching games:', err);
+            }
+        };
+
+        if (user.id) { // Only fetch games if user ID is available
+            fetchGames();
+        }
+    }, [user.id, setAllGames]); // Adding user.id as a dependency
 
     return (
         <div className="overflow-x-auto m-3">
@@ -23,34 +36,28 @@ const Catalog = (props) => {
             <table className="table mt-2">
                 <thead>
                     <tr className='text-lg text-purple-500'>
-                        <th >Name</th>
+                        <th>Name</th>
                         <th>Genre</th>
-                        <th>Platform</th>
-                        <th>How its Owned</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {/* MAP GOES HERE */}
-                    <tr className='hover:bg-purple-400 hover:text-black duration-300 ease-in-out'>
-                        <td>
-                            <Link to={'/game/gameId'}>Game Name</Link>
-                        </td>
-                        <td>Horror</td>
-                        <td>Steam</td>
-                        <td>Digital</td>
-
-                        <td>
-                            <Link to={`/game/GAMEID`} className="rounded hover:outline-purple-500 p-2 hover:bg-purple-800 hover:text-white mr-2">View</Link>
-                            
-                        {/* if added by user can update  */}
-                            <Link to={`/game/update/GAMEID`} className="rounded hover:outline-purple-500 p-2 hover:bg-purple-800 hover:text-white mr-2">Update</Link>
-                        </td>
-                    </tr>
-                    
+                    {allGames.map(game => (
+                        <tr className='hover:bg-purple-400 hover:text-black duration-300 ease-in-out' key={game.id}>
+                            <td>
+                                <Link to={`/game/${game.id}`}>{game.name}</Link>
+                            </td>
+                            <td>{game.genre}</td>
+                            <td>
+                                <Link to={`/games/${game.id}`} className="rounded hover:outline-purple-500 p-2 hover:bg-purple-800 hover:text-white mr-2">View</Link>
+                                <Link to={`/game/update/${game.id}`} className="rounded hover:outline-purple-500 p-2 hover:bg-purple-800 hover:text-white mr-2">Update</Link>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>
-)}
+    );
+}
 
 export default Catalog;

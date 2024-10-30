@@ -13,7 +13,9 @@ const RatingForm = (props) => {
 
     const submitHandler = e => {
         e.preventDefault()
-        // axios.post()
+        axios.post('http://localhost:5000/api/ratings/create')
+        .then( res => setRating(res.data))
+        .catch( err => console.log(err))
     }
 
     return (

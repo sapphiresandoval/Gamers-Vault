@@ -15,8 +15,10 @@ def create_user():
 # Login
 @app.post("/api/login")
 def login():
-    session["user"] = request.json  # Expecting JSON payload
-    user_id = user.User.login(request.json)
+    data = request.json  # Expecting JSON payload
+    print(f"Received data: {data}")
+    session["user"] = data
+    user_id = user.User.login(data)
     if user_id:
         return jsonify({"message": "Login successful", "user_id": user_id}), 200
     return jsonify({"message": "Login failed"}), 401

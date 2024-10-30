@@ -1,9 +1,11 @@
 import React, {useContext, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { userContext } from '../context/userContext';
+import axios from 'axios'
 
 const Login = (props) => {
     const {user, setUser} = useContext(userContext)
+    const [credentials, setCredentials] = useState({ username: '', password: ''}) 
     const navigate = useNavigate()
     const [userData, setUserData] = useState({
         email: '',
@@ -19,10 +21,18 @@ const Login = (props) => {
 
     const submitHandler = e => {
         e.preventDefault()
-        // set user in use context instead of user data.
-        // axios.post('', JSON.stringify(user),{ headers: { 'Content-Type': 'application/json' } })
-        //     .then(res => console.log(res))
-        //     .catch(err => console.log(err))
+
+        axios.post('http://localhost:5000/api/login', userData, {
+            headers: { 'Content-Type': 'application/json' }, credentials
+        })
+        .then(res => {
+            setUser({ id: res.data.user_id, username: res.data.username});  // Update user state with the response data
+            setCredentials(res.data)
+            navigate('/games/list');  // Redirect after successful login
+        })
+        .catch(err => {
+            console.error(err.response?.data?.message || 'Login failed'); // Log error message
+        })
     }
 
     return (
@@ -34,7 +44,7 @@ const Login = (props) => {
                     <form onSubmit={submitHandler}> 
                         <input 
                             type="email" 
-                            name="email"
+                            name="email" 
                             value={userData.email}
                             onChange={changeHandler}
                             placeholder='Email'

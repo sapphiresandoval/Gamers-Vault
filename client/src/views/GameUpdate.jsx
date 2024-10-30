@@ -1,6 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { userContext } from '../context/userContext';
 import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios'
+
 
 const GameUpdate = (props) => {
     const {user, setUser} = useContext(userContext)
@@ -10,26 +12,27 @@ const GameUpdate = (props) => {
     const [game, setGame] = useState({
         name: '',
         genre: '',
-        platform: '',
-        how_its_owned: '',
+        description: '',
         list: ''
     })
 
     useEffect(() => {
-        // axios.get()
+        axios.get(`http://localhost:5000/api/games/${gameId}`)
+        .then(res => setGame(res.data))
+        .catch(err => console.log(err))
     },[gameId])
 
     const changeHandler = e => {
-        const {name : value} = e.target
+        const {name, value} = e.target
         setGame(prev => ({...prev, [name]: value}))
     }
 
     const submitHandler = e => {
         e.preventDefault()
         const newGame = {...game, user_id: user.id}
-        // axios.post()
-            // .then(() => navigate to catelog)
-            // .catch(err => console.log(err))
+        axios.post('http://localhost:5000/api/games/edit')
+            .then(() => navigate('/game/catalog'))
+            .catch(err => console.log(err))
     }
 
     return (
