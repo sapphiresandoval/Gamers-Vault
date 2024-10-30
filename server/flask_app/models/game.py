@@ -24,7 +24,8 @@ class Game:
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
         self.user_id = data["user_id"]
-        self.ratings = None
+        self.ratings = []
+        self.user = None
 
     def is_rated(self, user_id):
         for rating in self.ratings:
