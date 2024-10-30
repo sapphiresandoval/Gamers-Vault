@@ -38,7 +38,7 @@ const GameCreate = () => {
             console.error(err);
             setGameErrors(err.response?.data || { general: 'Failed to create game' });
         }
-        }
+    }
 
     return (
         <div className="flex justify-center items-center h-screen">

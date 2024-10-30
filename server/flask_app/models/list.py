@@ -10,9 +10,10 @@ bcrypt = Bcrypt(app)
 
 # Remember 'fat models, skinny controllers' more logic should go in here rather than in your controller.
 
+
 class List:
-    db= "gamers_vault"
-    
+    db = "gamers_vault"
+
     def __init__(self, data):
         self.id = data["id"]
         self.list = data["list"]
@@ -21,11 +22,11 @@ class List:
         self.user_id = data["user_id"]
         self.game_id = data["game_id"]
         self.user = None
-        
+
     @classmethod
     def create_lists(cls, data):
         query = """
-            INSERT INTO lists (list, game_id, user_id)
+            INSERT INTO list (list, game_id, user_id)
             VALUES (%(list)s, %(game_id)s, %(user_id)s);
         """
         return connectToMySQL(cls.db).query_db(query, data)
@@ -33,7 +34,7 @@ class List:
     @classmethod
     def update_list(cls, data):
         query = """
-            UPDATE lists
+            UPDATE list
             SET 
             list = %(list)s,
             user_id = %(user_id)s,
@@ -46,7 +47,7 @@ class List:
     @classmethod
     def delete_list(cls, data):
         query = """
-            DELETE FROM lists 
+            DELETE FROM list 
             WHERE game_id = %(game_id)s 
             AND user_id = %(user_id)s;
         """

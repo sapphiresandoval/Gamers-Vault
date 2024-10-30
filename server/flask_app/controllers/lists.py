@@ -9,21 +9,28 @@ from flask_app.controllers import users, games
 
 
 # Create Controller
-@app.post('api/games/lists/create')
+@app.route("api/games/lists/create", methods=["POST"])
 def create():
-    session['list'] = request.json
-    if list.List.create(request.json):
-        return jsonify({"message": "List created successfully"}), 201
-    return jsonify({"message": "List creation failed"}), 400
+    user_id = request.json.get("user_id")  # Expect user_id in the request payload
+    game_id = request.json.get("game_id")
+    if not user_id or game_id:
+        return jsonify({"message": "Unauthorized"}), 401
 
-#Update
-@app.post('api/games/list/update')
+    list_data = request.json
+    if list.List.create_lists(list_data):  # Pass user_id to the create function
+        return jsonify({"message": "list created successfully"}), 201
+    return jsonify({"message": "list creation failed"}), 400
+
+
+# Update
+@app.post("api/games/list/update")
 def update():
     list.List.update_list(id)
     return jsonify({"message": "List updated successfully"}), 200
-    
+
+
 # Delete
-@app.route('/lists/delete/<int:id>', methods=['DELETE'])
+@app.route("/lists/delete/<int:id>", methods=["DELETE"])
 def delete(id):
     list.List.delete_list(id)
     return jsonify({"message": "List deleted successfully"}), 200
