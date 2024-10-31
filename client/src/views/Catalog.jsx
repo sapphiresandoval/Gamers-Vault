@@ -39,7 +39,7 @@ const Catalog = (props) => {
             <table className="table mt-2">
                 <thead>
                     <tr className='text-lg text-purple-500'>
-                        <th>Name</th>
+                        <th >Name</th>
                         <th>Genre</th>
                         <th>Actions</th>
                     </tr>
@@ -48,7 +48,7 @@ const Catalog = (props) => {
                     {allGames.map(game => (
                         <tr className='hover:bg-purple-400 hover:text-black duration-300 ease-in-out' key={game.id}>
                             <td>
-                                <Link to={`/game/${game.id}`}>{game.name}</Link>
+                                <Link className='hover:text-bold hover:text-lg hover:font-bold' to={`/game/${game.id}`}>{game.name}</Link>
                             </td>
                             <td>{game.genre}</td>
                             <td>

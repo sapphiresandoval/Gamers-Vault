@@ -36,7 +36,7 @@ const NavBar = (props) => {
                         <Link to={`/game/catalog`}>Catalog</Link>
                     </li>
                     <li>
-                        <p className='' onClick={logoutUser}>Logout</p>
+                        <p onClick={logoutUser}>Logout</p>
                     </li>
                 </ul>
             </div>

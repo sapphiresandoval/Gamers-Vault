@@ -66,14 +66,14 @@ const CompletedList = (props) => {
                             return (
                                 <tr key={game.id} className='hover:bg-purple-400 hover:text-black duration-300 ease-in-out'>
                                     <td>
-                                        <Link to={`/game/${game.id}`}>{game.name}</Link>
+                                        <Link className='hover:text-bold hover:text-lg hover:font-bold' to={`/game/${game.id}`}>{game.name}</Link>
                                     </td>
                                     <td>{game.genre}</td>
                                     <td>
-                                        <button>
-                                            <Link to={`/game/update/${game.id}`}>Update</Link>
-                                        </button>
-                                        <button onClick={() => deleteCompleted(collectionItem.id)}> Remove</button>
+                                        
+                                            <Link to={`/game/update/${game.id}`} className="rounded hover:outline-purple-500 p-2 hover:bg-purple-800 hover:text-white mr-2">Update</Link>
+                                        
+                                        <button onClick={() => deleteCompleted(collectionItem.id)}  className="rounded hover:outline-purple-500 p-2 hover:bg-purple-800 hover:text-white mr-2"> Remove</button>
                                     </td>
                                 </tr>
                             );

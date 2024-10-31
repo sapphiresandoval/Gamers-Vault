@@ -62,12 +62,13 @@ const GameDisplay = () => {
     
     return (
         <div className="flex justify-center items-center h-screen">
-            <div className="xl:w-[700px] px-10 h-[300px] rounded-3xl xl:shadow-xl">
-            <h2 className="text-center text-3xl font-bold mt-2 mb-2 text-purple-600">Game Name: {game.name}</h2>
+            <div className="xl:w-[700px] px-10 h-[350px] rounded-3xl xl:shadow-xl">
+            <h2 className="text-center text-3xl font-bold mt-2 mb-2 text-purple-600">{game.name}</h2>
             <hr/>
-                <p>Average Rating</p>
-                <p>Genre: {game.genre}</p>
-                <p>Description: {game.description}</p>
+                <p className=' text-center text-lg font-bold m-3'>Genre: </p>
+                <p className=' text-center text-lg font-bold m-1'>{game.genre} </p>
+                <p className=' text-center text-lg font-bold m-3'>Description: </p>
+                <p className=' text-center text-lg font-bold m-1'>{game.description} </p>
             <hr/>
             <h3 className="text-center text-xl font-bold mt-2 mb-2 text-purple-600">Add To Collection</h3>
                 {/* Add to collection if not in user collection */}
@@ -79,7 +80,7 @@ const GameDisplay = () => {
                         <option value="completed">Completed</option>
                     </select>
                     
-                    <input type="submit" value="Add To Collection" className='py-3 bg-purple-800 text-black w-[95px] h-[50px] rounded-md font-bold text-black ml-2' />
+                    <input type="submit" value="Add To Collection" className='py-3 bg-purple-800 text-black w-[200px] h-[50px] rounded-md font-bold text-black ml-2' />
                     
                 </form>
             </div>
