@@ -3,7 +3,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash, session
 import re
 from flask_bcrypt import Bcrypt
-from flask_app.models import user, list
+from flask_app.models import user, collection
 
 bcrypt = Bcrypt(app)
 # The above is used when we do login registration, flask-bcrypt should already be in your env check the pipfile
@@ -22,6 +22,7 @@ class Game:
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
         self.user_id = data["user_id"]
+        self.collections = []
         self.ratings = []
         self.user = None
 
@@ -154,54 +155,6 @@ class Game:
             games.append(game)
         return games
 
-    @classmethod
-    def game_with_lists(cls, id):
-        data = {"id": id}
-        query = """
-            SELECT * FROM lists
-            JOIN users AS list_maker
-            ON games.user_id = list_maker.id
-            LEFT JOIN lists
-            ON games.id = lists.game_id
-            LEFT JOIN users AS list_user
-            ON lists.user_id = list_user.id
-            WHERE games.id = %(id)s;
-        """
-        results = connectToMySQL(cls.db).query_db(query, data)
-        pprint(results)
-        this_game = cls(results[0])
-        this_game.user = user.User(
-            {
-                "id": results[0]["creator.id"],
-                "username": results[0]["username"],
-                "email": results[0]["email"],
-                "password": results[0]["password"],
-                "created_at": results[0]["creator.created_at"],
-                "updated_at": results[0]["creator.updated_at"],
-            }
-        )
-        if results[0]["list_maker.id"]:
-            for db_row in results:
-                if db_row["lists.user_id"] != None:
-                    list_obj = list.List(
-                        {
-                            "id": db_row["groans.id"],
-                            "user_id": db_row["lists.user_id"],
-                            "game_id": db_row["game_id"],
-                        }
-                    )
-                    list_obj.user = user.User(
-                        {
-                            "id": db_row["list_user.id"],
-                            "username": db_row["list_user.username"],
-                            "email": db_row["list_user.email"],
-                            "password": db_row["list_user.password"],
-                            "created_at": db_row["list_user.created_at"],
-                            "updated_at": db_row["list_user.updated_at"],
-                        }
-                    )
-                    this_game.list.append(list_obj)
-        return this_game
 
     # Update Models
     @classmethod

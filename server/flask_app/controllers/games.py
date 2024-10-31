@@ -1,6 +1,6 @@
 from flask_app import app
 from flask import jsonify, request
-from flask_app.models import user, game
+from flask_app.models import user, game, collection
 
 
 # Create Game

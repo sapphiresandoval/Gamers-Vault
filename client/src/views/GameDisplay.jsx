@@ -5,13 +5,13 @@ import RatingForm from '../components/RatingForm';
 import axios from 'axios'
 
 
-const GameDisplay = (props) => {
+const GameDisplay = () => {
     const {gameId} = useParams()
     const {game, setGame} = useContext(userContext)
     const {user, setUser} = useContext(userContext)
     const navigate = useNavigate()
-    const [list, setList] = useState({
-        list: ''
+    const [collection, setCollection] = useState({
+        collection_name: ''
     })
 
     console.log(game)
@@ -21,18 +21,20 @@ const GameDisplay = (props) => {
         const fetchGame = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/api/games/${gameId}`);
-                setGame(response.data);  // Set the game state with fetched data
+                {
+                    setGame(response.data);  // Set the game state with fetched data
+                }
             } catch (error) {
                 console.error("Error fetching game data:", error);
             }
         };
 
         fetchGame();
-    }, [gameId])
+    }, [gameId, setGame])
 
     const changeHandler = e => {
         const {name, value} = e.target
-        setList(prev => ({...prev, [name]: value}))
+        setCollection(prev => ({...prev, [name]: value}))
     }
 
     const submitHandler = e => {
@@ -43,14 +45,19 @@ const GameDisplay = (props) => {
             return;
         }
 
-        const newList = { ...list, user_id: user.id, game_id: game.id }; // Use user.id directly
-
-        try {
-            axios.post('http://localhost:5000/api/list/create', newList);
-            navigate(`/game/${game.id}`);
-        } catch (err) {
-            console.error(err);
+        if (!collection.collection_name){
+            console.error("Please select a collection.")
+            return
         }
+
+        const newCollection = { ...collection, user_id: user.id, game_id: game.id }; // Use user.id directly
+
+        
+        axios.post('http://localhost:5000/api/collections/createcollection', newCollection)
+        .then( res => setCollection(res.data))
+        .catch(err => console.log("COLLECTION ERROR:", err))
+        navigate('/game/catalog')
+        console.log(newCollection)
     }
     
     return (
@@ -60,19 +67,19 @@ const GameDisplay = (props) => {
             <hr/>
                 <p>Average Rating</p>
                 <p>Genre: {game.genre}</p>
-                <p>Desctiption: {game.description}</p>
+                <p>Description: {game.description}</p>
             <hr/>
-            <h3 className="text-center text-xl font-bold mt-2 mb-2 text-purple-600">Add To List</h3>
-                {/* Add to list if not in user list */}
+            <h3 className="text-center text-xl font-bold mt-2 mb-2 text-purple-600">Add To Collection</h3>
+                {/* Add to collection if not in user collection */}
                 <form onSubmit={submitHandler}>
-                    <select name="list" onChange={changeHandler} className="select select-bordered w-full max-w-xs">
-                        <option value="">Select List</option>
+                    <select name="collection_name" value={collection.collection_name} onChange={changeHandler} className="select select-bordered w-full max-w-xs">
+                        <option value="">Select Collection</option>
                         <option value="backlog">Backlog</option>
                         <option value="wish">Wish</option>
                         <option value="completed">Completed</option>
                     </select>
                     
-                    <input type="submit" value="Add To List" className='py-3 bg-purple-800 text-black w-[95px] h-[50px] rounded-md font-bold text-black ml-2' />
+                    <input type="submit" value="Add To Collection" className='py-3 bg-purple-800 text-black w-[95px] h-[50px] rounded-md font-bold text-black ml-2' />
                     
                 </form>
             </div>

@@ -82,27 +82,27 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
--- Table `gamers_vault`.`list`
+-- Table `gamers_vault`.`collections`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `gamers_vault`.`list` ;
+DROP TABLE IF EXISTS `gamers_vault`.`collections` ;
 
-CREATE TABLE IF NOT EXISTS `gamers_vault`.`list` (
+CREATE TABLE IF NOT EXISTS `gamers_vault`.`collections` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `users_id` INT NOT NULL,
-  `games_id` INT NOT NULL,
-  `list` VARCHAR(45) NULL,
+  `collection_name` VARCHAR(45) NOT NULL,
+  `user_id` INT NOT NULL,
+  `game_id` INT NOT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`, `users_id`, `games_id`),
-  INDEX `fk_users_has_games_games1_idx` (`games_id` ASC) VISIBLE,
-  INDEX `fk_users_has_games_users1_idx` (`users_id` ASC) VISIBLE,
+  PRIMARY KEY (`id`),
+  INDEX `fk_users_has_games_games1_idx` (`game_id` ASC) VISIBLE,
+  INDEX `fk_users_has_games_users1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_users_has_games_users1`
-    FOREIGN KEY (`users_id`)
+    FOREIGN KEY (`user_id`)
     REFERENCES `gamers_vault`.`users` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_has_games_games1`
-    FOREIGN KEY (`games_id`)
+    FOREIGN KEY (`game_id`)
     REFERENCES `gamers_vault`.`games` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
