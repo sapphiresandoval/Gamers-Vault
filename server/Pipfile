@@ -8,8 +8,8 @@ pymysql = "*"
 flask-cors = "*"
 flask-bcrypt = "*"
 jsonify = "*"
-flask = "*"
 mysql = "*"
+flask = "*"
 
 [dev-packages]
 
